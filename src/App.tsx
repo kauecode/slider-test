@@ -50,12 +50,13 @@ function App() {
       <Swiper   
         spaceBetween={10}
         breakpoints={{
-          320: { slidesPerView: 1.5 }, 
-          640: { slidesPerView: 2.5 }, 
-          1024: { slidesPerView: 3.5 },
+          320: { slidesPerView: 1 }, 
+          640: { slidesPerView: 3 }, 
+          1024: { slidesPerView: 5 },
         }}
         ref={sliderRef}
-        slidesOffsetBefore={200}
+        centeredSlides={true}
+        slidesOffsetBefore={0}
         scrollbar={{ draggable: true }}        
       >
         {data.map((item, i) => 
