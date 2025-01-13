@@ -9,6 +9,7 @@ body {
 }
 
 h1 {
+  font-weight: 100;
   text-align: center;
   padding: 50px 20px;
 }
@@ -23,6 +24,7 @@ h1 {
 }
 
 .slider-restaurants-item {
+  cursor: grab;
   transition: transform 0.3s ease-in-out;
   transform: scale(0.90);
   padding: 0px;

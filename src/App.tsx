@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.scss'
-import { MOCK_DATA } from './mockData'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import axios from 'axios';
 
 interface Restaurant {
   images: string[],
@@ -15,10 +15,20 @@ function App() {
 
   const [data, setData] = useState<Restaurant[]>([]);
 
-  useEffect(() => {    
+  useEffect(() => { 
+    
     // Fake api call
-    setData(MOCK_DATA.dining.restaurants)
-    console.log(data);
+    // Got local json to work, 
+    // needed to be in the public folder ;)
+    axios.get("/data.json")
+    .then(res => {
+      console.log(res.data);
+      setData(res.data.dining.restaurants)
+    })
+    .catch(err => {
+      console.error("Error:", err);
+    });    
+    
   }, [])
 
   return (
@@ -32,8 +42,8 @@ function App() {
           1024: { slidesPerView: 4.5 },
         }}
         slidesOffsetBefore={200}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
+        // onSlideChange={() => console.log('slide change')}
+        // onSwiper={(swiper) => console.log(swiper)}
         scrollbar={{ draggable: true }}        
       >
         {data.map((item, i) => 
