@@ -31,6 +31,7 @@ function App() {
           640: { slidesPerView: 3.5 }, 
           1024: { slidesPerView: 4.5 },
         }}
+        slidesOffsetBefore={200}
         onSlideChange={() => console.log('slide change')}
         onSwiper={(swiper) => console.log(swiper)}
         scrollbar={{ draggable: true }}        
