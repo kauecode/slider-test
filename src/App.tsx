@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import './App.scss'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
 import axios from 'axios';
+import { GrNext, GrPrevious } from 'react-icons/gr';
 
 interface Restaurant {
   images: string[],
@@ -14,6 +15,18 @@ interface Restaurant {
 function App() {
 
   const [data, setData] = useState<Restaurant[]>([]);
+
+  const sliderRef = useRef<SwiperRef>(null);
+
+  const handlePrev = useCallback(() => {
+    if (!sliderRef.current) return;
+    sliderRef.current.swiper.slidePrev();
+  }, []);
+
+  const handleNext = useCallback(() => {
+    if (!sliderRef.current) return;
+    sliderRef.current.swiper.slideNext();
+  }, []);
 
   useEffect(() => { 
     
@@ -38,12 +51,11 @@ function App() {
         spaceBetween={10}
         breakpoints={{
           320: { slidesPerView: 1.5 }, 
-          640: { slidesPerView: 3.5 }, 
-          1024: { slidesPerView: 4.5 },
+          640: { slidesPerView: 2.5 }, 
+          1024: { slidesPerView: 3.5 },
         }}
+        ref={sliderRef}
         slidesOffsetBefore={200}
-        // onSlideChange={() => console.log('slide change')}
-        // onSwiper={(swiper) => console.log(swiper)}
         scrollbar={{ draggable: true }}        
       >
         {data.map((item, i) => 
@@ -54,15 +66,20 @@ function App() {
                 </div>
                 <div className='text-wrapper'>
                   <p>{item.name}</p>
+                  <a className='btn' href={item.websiteUrl} target='_blank'>book a table</a>
                 </div>
-            </div>
-            
+            </div>            
           </SwiperSlide>
         )}
-      
-
+        <div className='nav-wrapper'>
+          <button className="swiper-button-prev" onClick={handlePrev}>
+            <GrPrevious size={50} />
+          </button>
+          <button className="swiper-button-next" onClick={handleNext}>
+            <GrNext size={50} />
+          </button>          
+        </div>
       </Swiper>
-
     </>
   )
 }
