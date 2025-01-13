@@ -25,7 +25,7 @@ function App() {
     <>     
       <h1>Restaurant Collection</h1>
       <Swiper   
-        spaceBetween={30}
+        spaceBetween={10}
         breakpoints={{
           320: { slidesPerView: 1.5 }, 
           640: { slidesPerView: 3.5 }, 

@@ -14,12 +14,17 @@ h1 {
 }
 
 .swiper-slide-next {
+  .slider-restaurants-item {
+    transform: scale(1);
+  }  
   .slider-restaurants-item img {
     transform: scale(1.2);
   }
 }
 
 .slider-restaurants-item {
+  transition: transform 0.3s ease-in-out;
+  transform: scale(0.90);
   padding: 0px;
   display: block;
   background-color: white;
