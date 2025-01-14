@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import './App.scss'
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
 import axios from 'axios';
 import { GrNext, GrPrevious } from 'react-icons/gr';
+import './App.scss'
 
 interface Restaurant {
   images: string[],
@@ -15,6 +15,7 @@ interface Restaurant {
 function App() {
 
   const [data, setData] = useState<Restaurant[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const sliderRef = useRef<SwiperRef>(null);
 
@@ -30,16 +31,19 @@ function App() {
 
   useEffect(() => { 
     
+    setIsLoading(true);
+    
     // Fake api call
-    // Got local json to work, 
-    // needed to be in the public folder ;)
     axios.get("/data.json")
     .then(res => {
-      console.log(res.data);
-      setData(res.data.dining.restaurants)
+      setTimeout(() => {
+        setData(res.data.dining.restaurants)
+        setIsLoading(false)
+      }, 1000)      
     })
     .catch(err => {
       console.error("Error:", err);
+      setIsLoading(false)
     });    
     
   }, [])
@@ -47,6 +51,9 @@ function App() {
   return (
     <>     
       <h1>Restaurant Collection</h1>
+
+      {isLoading && <div className='loader-wrapper'><span></span></div>}
+
       <Swiper   
         spaceBetween={10}
         breakpoints={{
@@ -61,18 +68,18 @@ function App() {
       >
         {data.map((item, i) => 
           <SwiperSlide key={i}>
-            <div className='slider-restaurants-item'>
+            <div className='slider-item-wrapper'>
                 <div className='image-wrapper'>
                   <img src={item.images[0]} alt='Photo from {item.name}' />
                 </div>
-                <div className='text-wrapper'>
+                <div className='bottom-wrapper'>
                   <p>{item.name}</p>
                   <a className='btn' href={item.websiteUrl} target='_blank'>book a table</a>
                 </div>
             </div>            
           </SwiperSlide>
         )}
-        <div className='nav-wrapper'>
+        <div className='slider-nav-wrapper'>
           <button className="swiper-button-prev" onClick={handlePrev}>
             <GrPrevious size={50} />
           </button>
