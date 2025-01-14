@@ -70,6 +70,9 @@ h1 {
       transform: scale(1.05);      
       background-color: rgb(46, 46, 46);
     }
+    &:active {
+      transform: scale(0.95);
+    }    
   }
 }
 .swiper-slide-active {
@@ -89,6 +92,12 @@ h1 {
   display: flex;
   justify-content: space-between;
 }
+.swiper-button-prev.hidden,
+.swiper-button-next.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
 .swiper-button-prev,
 .swiper-button-next {
   cursor: pointer;
@@ -110,6 +119,13 @@ h1 {
     transform: scale(1);    
   }
 }
+.swiper-button-prev:active {
+  transform: translateX(-10px);    
+}
+.swiper-button-next:active {
+  transform: translateX(10px);    
+}
+
 
 // CSS LOADER
 .loader-wrapper {
